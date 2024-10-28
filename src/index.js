@@ -1,5 +1,5 @@
 import { CounterRalph } from './artifacts/ts/CounterRalph'
-import { web3, NodeProvider, ONE_ALPH, DUST_AMOUNT } from '@alephium/web3'
+import { web3, NodeProvider, ONE_ALPH, DUST_AMOUNT, ALPH } from '@alephium/web3'
 import { getDefaultAlephiumWallet } from "@alephium/get-extension-wallet"
 
 var wallet;
@@ -13,7 +13,7 @@ async function connectWallet() {
 
   if (windowAlephium && selectedAccount) {
     console.log(selectedAccount);
-    wallet = selectedAccount;
+    wallet = windowAlephium;
   }
   else {
     console.log('connection to alephium wallet failed');
@@ -45,7 +45,7 @@ async function increment_counter(){
     try {
         const res = await ctr.transact.incrementCounter({
         signer: wallet,
-        attoAlphAmount: ONE_ALPH / 10n + DUST_AMOUNT
+        attoAlphAmount: DUST_AMOUNT
       })
         console.log("counter incremented successfully!");
     }
@@ -58,4 +58,25 @@ async function increment_counter(){
 window.increment_counter = increment_counter;
 
 
+async function reset_counter(){
+    const nodeUrl = 'https://wallet-v20.testnet.alephium.org'
+    const nodeProvider = new NodeProvider(nodeUrl)
+    web3.setCurrentNodeProvider(nodeProvider)
+
+    const counterAddress = 'ysCdctbmaHwjBdJekxLTbjCzqAWwey2x1F34n9oTPG3c'
+    const ctr = CounterRalph.at(counterAddress)
+    try {
+        const res = await ctr.transact.resetCounter({
+        signer: wallet,
+        attoAlphAmount: ONE_ALPH / 10n + DUST_AMOUNT
+      })
+        console.log("counter reset successfully!");
+    }
+    catch (err) {
+        console.log(err);
+        console.log("counter reset task failed successfully!");
+    }
+    
+}
+window.reset_counter = reset_counter;
  
