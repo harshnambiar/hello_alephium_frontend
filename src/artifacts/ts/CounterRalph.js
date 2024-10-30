@@ -10,6 +10,7 @@ exports.CounterRalphInstance = exports.CounterRalph = void 0;
 const web3_1 = require("@alephium/web3");
 const CounterRalph_ral_json_1 = __importDefault(require("../CounterRalph.ral.json"));
 const contracts_1 = require("./contracts");
+const types_1 = require("./types");
 const web3_2 = require("@alephium/web3");
 class Factory extends web3_1.ContractFactory {
     constructor() {
@@ -19,12 +20,19 @@ class Factory extends web3_1.ContractFactory {
             ErrorCodes: {
                 MaxLimit: BigInt("0"),
                 AlreadyNil: BigInt("1"),
+                DataMalfunction: BigInt("2"),
                 LackOfBal: BigInt("7"),
             },
         };
         this.tests = {
             getCounter: async (params) => {
                 return (0, web3_1.testMethod)(this, "getCounter", params, contracts_1.getContractByCodeHash);
+            },
+            getLastCaller: async (params) => {
+                return (0, web3_1.testMethod)(this, "getLastCaller", params, contracts_1.getContractByCodeHash);
+            },
+            getLastFiveChanges: async (params) => {
+                return (0, web3_1.testMethod)(this, "getLastFiveChanges", params, contracts_1.getContractByCodeHash);
             },
             incrementCounter: async (params) => {
                 return (0, web3_1.testMethod)(this, "incrementCounter", params, contracts_1.getContractByCodeHash);
@@ -35,7 +43,7 @@ class Factory extends web3_1.ContractFactory {
         };
     }
     encodeFields(fields) {
-        return (0, web3_1.encodeContractFields)((0, web3_1.addStdIdToFields)(this.contract, fields), this.contract.fieldsSig, []);
+        return (0, web3_1.encodeContractFields)((0, web3_1.addStdIdToFields)(this.contract, fields), this.contract.fieldsSig, types_1.AllStructs);
     }
     at(address) {
         return new CounterRalphInstance(address);
@@ -45,7 +53,8 @@ class Factory extends web3_1.ContractFactory {
     }
 }
 // Use this object to test and deploy the contract
-exports.CounterRalph = new Factory(web3_1.Contract.fromJson(CounterRalph_ral_json_1.default, "=8-4=1+d=1+123=41-1+c=14+7e021d5468652063757272656e7420636f756e7465722076616c75652069732000a000=173-1+c=40+7a7e0214696e73657274206174206d617020706174683a2000=31-1+f=10+a0007e021d5468652063757272656e7420636f756e7465722076616c75652069732000=80", "6a76c755294a0f1c6efa10a81fd79498e48c575f79226c1780260ae9df5fbd73", []));
+exports.CounterRalph = new Factory(web3_1.Contract.fromJson(CounterRalph_ral_json_1.default, "=16-2+82=2-2+ea=445-1+9=10+a0007e021d5468652063757272656e7420636f756e7465722076616c75652069732000=154+7a7e0214696e73657274206174206d617020706174683a2000=53-1+f=10+a0007e021d5468652063757272656e7420636f756e7465722076616c75652069732000=116", "2e40852d9b7d9ebd0c35117f81afcd695e07206c9fe72936c95d817030cbca1b", types_1.AllStructs));
+(0, contracts_1.registerContract)(exports.CounterRalph);
 // Use this class to interact with the blockchain
 class CounterRalphInstance extends web3_1.ContractInstance {
     constructor(address) {
@@ -57,6 +66,12 @@ class CounterRalphInstance extends web3_1.ContractInstance {
             getCounter: async (params) => {
                 return (0, web3_1.callMethod)(exports.CounterRalph, this, "getCounter", params === undefined ? {} : params, contracts_1.getContractByCodeHash);
             },
+            getLastCaller: async (params) => {
+                return (0, web3_1.callMethod)(exports.CounterRalph, this, "getLastCaller", params === undefined ? {} : params, contracts_1.getContractByCodeHash);
+            },
+            getLastFiveChanges: async (params) => {
+                return (0, web3_1.callMethod)(exports.CounterRalph, this, "getLastFiveChanges", params === undefined ? {} : params, contracts_1.getContractByCodeHash);
+            },
             incrementCounter: async (params) => {
                 return (0, web3_1.callMethod)(exports.CounterRalph, this, "incrementCounter", params === undefined ? {} : params, contracts_1.getContractByCodeHash);
             },
@@ -67,6 +82,12 @@ class CounterRalphInstance extends web3_1.ContractInstance {
         this.transact = {
             getCounter: async (params) => {
                 return (0, web3_1.signExecuteMethod)(exports.CounterRalph, this, "getCounter", params);
+            },
+            getLastCaller: async (params) => {
+                return (0, web3_1.signExecuteMethod)(exports.CounterRalph, this, "getLastCaller", params);
+            },
+            getLastFiveChanges: async (params) => {
+                return (0, web3_1.signExecuteMethod)(exports.CounterRalph, this, "getLastFiveChanges", params);
             },
             incrementCounter: async (params) => {
                 return (0, web3_1.signExecuteMethod)(exports.CounterRalph, this, "incrementCounter", params);

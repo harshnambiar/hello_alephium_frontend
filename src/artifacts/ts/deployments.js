@@ -12,12 +12,10 @@ const _deployments_testnet_json_1 = __importDefault(require("../../deployments/.
 const _deployments_devnet_json_1 = __importDefault(require("../../deployments/.deployments.devnet.json"));
 function toDeployments(json) {
     const contracts = {
-        CounterRalph: json.contracts["CounterRalph"] === undefined
-            ? undefined
-            : {
-                ...json.contracts["CounterRalph"],
-                contractInstance: _1.CounterRalph.at(json.contracts["CounterRalph"].contractInstance.address),
-            },
+        CounterRalph: {
+            ...json.contracts["CounterRalph"],
+            contractInstance: _1.CounterRalph.at(json.contracts["CounterRalph"].contractInstance.address),
+        },
     };
     return {
         ...json,

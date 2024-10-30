@@ -26,7 +26,7 @@ async function get_counter(){
     const nodeProvider = new NodeProvider(nodeUrl)
     web3.setCurrentNodeProvider(nodeProvider)
 
-    const counterAddress = 'ysCdctbmaHwjBdJekxLTbjCzqAWwey2x1F34n9oTPG3c'
+    const counterAddress = '27jC7SfSAWwzVZpBcA4bZ9qrRggvVvSKACfnN9QHeS29Q'
     const ctr = CounterRalph.at(counterAddress)
     const counterVal = await ctr.view.getCounter()
     console.log(counterVal)
@@ -39,13 +39,15 @@ async function increment_counter(){
     const nodeProvider = new NodeProvider(nodeUrl)
     web3.setCurrentNodeProvider(nodeProvider)
 
-    const counterAddress = 'ysCdctbmaHwjBdJekxLTbjCzqAWwey2x1F34n9oTPG3c'
+    const counterAddress = '27jC7SfSAWwzVZpBcA4bZ9qrRggvVvSKACfnN9QHeS29Q'
     const ctr = CounterRalph.at(counterAddress)
     console.log(wallet);
     try {
         const res = await ctr.transact.incrementCounter({
         signer: wallet,
-        attoAlphAmount: DUST_AMOUNT
+        attoAlphAmount: DUST_AMOUNT * 100n
+        //this amount is 0.10 ALPH, needed to insert into one mapping in Ralph. if there were more mappings, it 
+        //would have been a multiple of this
       })
         console.log("counter incremented successfully!");
     }
@@ -63,12 +65,14 @@ async function reset_counter(){
     const nodeProvider = new NodeProvider(nodeUrl)
     web3.setCurrentNodeProvider(nodeProvider)
 
-    const counterAddress = 'ysCdctbmaHwjBdJekxLTbjCzqAWwey2x1F34n9oTPG3c'
+    const counterAddress = '27jC7SfSAWwzVZpBcA4bZ9qrRggvVvSKACfnN9QHeS29Q'
     const ctr = CounterRalph.at(counterAddress)
     try {
         const res = await ctr.transact.resetCounter({
         signer: wallet,
         attoAlphAmount: ONE_ALPH / 10n + DUST_AMOUNT
+        // the resetCounter function in the smart contract takes 0.10 ALPH to reset, hence
+        // this amount has to be mentioned here for the transaction to go through
       })
         console.log("counter reset successfully!");
     }
