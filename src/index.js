@@ -33,6 +33,30 @@ async function get_counter(){
 }
 window.get_counter = get_counter;
 
+async function get_last_caller(){
+    const nodeUrl = 'https://wallet-v20.testnet.alephium.org'
+    const nodeProvider = new NodeProvider(nodeUrl)
+    web3.setCurrentNodeProvider(nodeProvider)
+
+    const counterAddress = '27jC7SfSAWwzVZpBcA4bZ9qrRggvVvSKACfnN9QHeS29Q'
+    const ctr = CounterRalph.at(counterAddress)
+    const counterVal = await ctr.view.getLastCaller()
+    console.log(counterVal)
+}
+window.get_last_caller = get_last_caller;
+
+async function get_timeline(){
+    const nodeUrl = 'https://wallet-v20.testnet.alephium.org'
+    const nodeProvider = new NodeProvider(nodeUrl)
+    web3.setCurrentNodeProvider(nodeProvider)
+
+    const counterAddress = '27jC7SfSAWwzVZpBcA4bZ9qrRggvVvSKACfnN9QHeS29Q'
+    const ctr = CounterRalph.at(counterAddress)
+    const counterVal = await ctr.view.getLastFiveChanges()
+    console.log(counterVal)
+}
+window.get_timeline = get_timeline;
+
 
 async function increment_counter(){
     const nodeUrl = 'https://wallet-v20.testnet.alephium.org'
